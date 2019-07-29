@@ -20,13 +20,13 @@
                           name="post-gre-sql_persistence_events_postgresPool" >
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="5433"/>
-        <property name="databaseName" value="ifpb_eventos"/>
+        <property name="databaseName" value="atividade_consultas"/>
         <property name="User" value="postgres"/>
         <property name="Password" value="postgres"/>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" 
-                   jndi-name="java:app/jdbc/persistence_events" 
+                   jndi-name="java:app/jdbc/atividade_consultas"
                    object-type="user" 
                    pool-name="post-gre-sql_persistence_events_postgresPool"/>
 </resources>
