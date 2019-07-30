@@ -20,7 +20,7 @@
                           name="post-gre-sql_persistence_events_postgresPool" >
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="5433"/>
-        <property name="databaseName" value="atividade_consultas"/>
+        <property name="databaseName" value="atividade_consultass"/>
         <property name="User" value="postgres"/>
         <property name="Password" value="postgres"/>
         <property name="driverClass" value="org.postgresql.Driver"/>

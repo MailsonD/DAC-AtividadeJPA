@@ -1,8 +1,9 @@
 package com.ifpb.atividadConsultas.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 public class Professor extends Pessoa {
 
     private Double salario;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Telefone> telefones;
 
     public Professor() {

@@ -2,11 +2,11 @@ package com.ifpb.atividadConsultas.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Pessoa implements Serializable {
 
     @Id
@@ -18,7 +18,7 @@ public class Pessoa implements Serializable {
     private int idade;
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Endereco endereco;
 
     public Pessoa() {

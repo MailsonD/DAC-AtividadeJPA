@@ -3,7 +3,7 @@ package com.ifpb.atividadConsultas.model;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity

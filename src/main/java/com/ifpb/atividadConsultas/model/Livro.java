@@ -2,7 +2,7 @@ package com.ifpb.atividadConsultas.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -93,7 +93,6 @@ public class Livro implements Serializable {
                 ", titulo='" + titulo + '\'' +
                 ", ISBN='" + ISBN + '\'' +
                 ", lancamento=" + lancamento +
-                ", autores=" + autores +
                 '}';
     }
 }
