@@ -1,7 +1,10 @@
 package com.ifpb.atividadConsultas.model;
 
+import com.ifpb.atividadConsultas.conversores.ConvertLocalDate;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,15 +19,15 @@ public class Pessoa implements Serializable {
     @Column(unique = true)
     private String cpf;
     private int idade;
-    @Temporal(TemporalType.DATE)
-    private Date dataNascimento;
+    @Convert(converter = ConvertLocalDate.class)
+    private LocalDate dataNascimento;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Endereco endereco;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome, String cpf, int idade, Date dataNascimento, Endereco endereco) {
+    public Pessoa(String nome, String cpf, int idade, LocalDate dataNascimento, Endereco endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.idade = idade;
@@ -64,11 +67,11 @@ public class Pessoa implements Serializable {
         this.idade = idade;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

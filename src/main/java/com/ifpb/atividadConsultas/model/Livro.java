@@ -1,7 +1,10 @@
 package com.ifpb.atividadConsultas.model;
 
+import com.ifpb.atividadConsultas.conversores.ConvertLocalDate;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -14,12 +17,12 @@ public class Livro implements Serializable {
     private int id;
     private String titulo;
     private String ISBN;
-    @Temporal(TemporalType.DATE)
-    private Date lancamento;
+    @Convert(converter = ConvertLocalDate.class)
+    private LocalDate lancamento;
     @ManyToMany(mappedBy = "livros")
     private List<Autor> autores;
 
-    public Livro(String titulo, String ISBN, Date lancamento, List<Autor> autores) {
+    public Livro(String titulo, String ISBN, LocalDate lancamento, List<Autor> autores) {
         this.titulo = titulo;
         this.ISBN = ISBN;
         this.lancamento = lancamento;
@@ -53,11 +56,11 @@ public class Livro implements Serializable {
         this.ISBN = ISBN;
     }
 
-    public Date getLancamento() {
+    public LocalDate getLancamento() {
         return lancamento;
     }
 
-    public void setLancamento(Date lancamento) {
+    public void setLancamento(LocalDate lancamento) {
         this.lancamento = lancamento;
     }
 

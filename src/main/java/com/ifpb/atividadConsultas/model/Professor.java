@@ -3,6 +3,7 @@ package com.ifpb.atividadConsultas.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class Professor extends Pessoa {
     public Professor() {
     }
 
-    public Professor(String nome, String cpf, int idade, Date dataNascimento, Endereco endereco, Double salario, List<Telefone> telefones) {
+    public Professor(String nome, String cpf, int idade, LocalDate dataNascimento, Endereco endereco, Double salario, List<Telefone> telefones) {
         super(nome, cpf, idade, dataNascimento, endereco);
         this.salario = salario;
         this.telefones = telefones;
@@ -59,6 +60,6 @@ public class Professor extends Pessoa {
         return "Professor{" +
                 "salario=" + salario +
                 ", telefones=" + telefones +
-                '}';
+                "} " + super.toString();
     }
 }

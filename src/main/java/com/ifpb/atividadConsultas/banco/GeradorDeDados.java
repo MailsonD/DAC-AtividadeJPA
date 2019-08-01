@@ -4,6 +4,7 @@ import com.ifpb.atividadConsultas.model.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,30 +47,31 @@ public class GeradorDeDados {
         alunos.add(
                 new Aluno(
                         "Lucas","1233211565",19,
-                        new Date(2000,03,11),
+
+                        LocalDate.of(2000,03,11),
                         endereco1,
                         "282828282",
-                        new Date(2018,05,16),
+                        LocalDate.of(2018,05,16),
                         turma1
                         )
         );
         alunos.add(
                 new Aluno(
                         "Jonas","1457311565",21,
-                        new Date(1998,05,18),
+                        LocalDate.of(1998,05,18),
                         endereco1,
                         "272178282",
-                        new Date(2016,04,20),
+                        LocalDate.of(2016,04,20),
                         turma1
                 )
         );
         alunos.add(
                 new Aluno(
                         "Marcos","7853211565",16,
-                        new Date(2003,07,05),
+                        LocalDate.of(2003,07,05),
                         endereco1,
                         "282828282",
-                        new Date(2018,05,16),
+                        LocalDate.of(2018,05,16),
                         turma2
                 )
         );
@@ -82,7 +84,7 @@ public class GeradorDeDados {
                 "Diego",
                 "521264511",
                 37,
-                new Date(1984,07,26),
+                LocalDate.of(1984,07,26),
                 endereco2,
                 "IFPB",
                 null
@@ -91,7 +93,7 @@ public class GeradorDeDados {
                 "Paulo",
                 "61458021",
                 37,
-                new Date(1982,11,21)
+                LocalDate.of(1982,11,21)
                 ,
                 endereco1,
                 "IFPB",
@@ -102,21 +104,21 @@ public class GeradorDeDados {
         Livro meu_banco_e_o_melhor = new Livro(
                 "Meu banco é o melhor",
                 "111111",
-                new Date(2019,03,25),
+                LocalDate.of(2019,03,25),
                 Collections.singletonList(diego)
         );
 
         Livro meu_ejb_e_o_melhor = new Livro(
                 "Meu EJB é o melhor",
                 "222222",
-                new Date(),
+                LocalDate.now(),
                 Collections.singletonList(diego)
         );
 
         Livro meu_poo_e_o_melhor = new Livro(
                 "Meu POO é o melhor",
                 "444444",
-                new Date(),
+                LocalDate.now(),
                 Collections.singletonList(paulo)
         );
 
@@ -141,21 +143,21 @@ public class GeradorDeDados {
 
         Telefone telefone1 = new Telefone("8980678",TelefoneType.COMERICAL);
         Telefone telefone2 = new Telefone("9768589",TelefoneType.RESIDENCIAL);
-        Telefone telefone3 = new Telefone("5634134",TelefoneType.COMERICAL);
+//        Telefone telefone3 = new Telefone("5634134",TelefoneType.COMERICAL);
 
         List<Telefone> telefonesDeJob = new ArrayList<>();
         telefonesDeJob.add(telefone1);
         telefonesDeJob.add(telefone2);
 
-        List<Telefone> telefonesDeAri = new ArrayList<>();
-        telefonesDeAri.add(telefone3);
+//        List<Telefone> telefonesDeAri = new ArrayList<>();
+//        telefonesDeAri.add(telefone3);
 
         Professor job = new Professor(
                 "Ricardo Job",
                 "68423143",
                 45,
-                new Date(),
-                endereco1,
+                LocalDate.now(),
+                endereco2,
                 9000.0,
                 telefonesDeJob
         );
@@ -163,10 +165,10 @@ public class GeradorDeDados {
                 "Aristofanio",
                 "656824114",
                 48,
-                new Date(),
+                LocalDate.now(),
                 endereco1,
                 8000.0,
-                telefonesDeAri
+                null
         );
 
         professores.add(job);

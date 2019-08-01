@@ -1,8 +1,12 @@
 package com.ifpb.atividadConsultas.model;
 
+import com.ifpb.atividadConsultas.conversores.ConvertLocalDate;
+
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,14 +14,14 @@ import java.util.Objects;
 public class Aluno extends Pessoa {
 
     private String matricula;
-    @Temporal(TemporalType.DATE)
-    private Date dataIngresso;
+    @Convert(converter = ConvertLocalDate.class)
+    private LocalDate dataIngresso;
     private String turma;
 
     public Aluno() {
     }
 
-    public Aluno(String nome, String cpf, int idade, Date dataNascimento, Endereco endereco, String matricula, Date dataIngresso, String turma) {
+    public Aluno(String nome, String cpf, int idade, LocalDate dataNascimento, Endereco endereco, String matricula, LocalDate dataIngresso, String turma) {
         super(nome, cpf, idade, dataNascimento, endereco);
         this.matricula = matricula;
         this.dataIngresso = dataIngresso;
@@ -32,11 +36,11 @@ public class Aluno extends Pessoa {
         this.matricula = matricula;
     }
 
-    public Date getDataIngresso() {
+    public LocalDate getDataIngresso() {
         return dataIngresso;
     }
 
-    public void setDataIngresso(Date dataIngresso) {
+    public void setDataIngresso(LocalDate dataIngresso) {
         this.dataIngresso = dataIngresso;
     }
 
@@ -70,6 +74,6 @@ public class Aluno extends Pessoa {
                 "matricula='" + matricula + '\'' +
                 ", dataIngresso=" + dataIngresso +
                 ", turma='" + turma + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

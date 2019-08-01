@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Autor extends Pessoa implements Serializable {
     public Autor() {
     }
 
-    public Autor(String nome, String cpf, int idade, Date dataNascimento, Endereco endereco, String instituicaoVinculada, List<Livro> livros) {
+    public Autor(String nome, String cpf, int idade, LocalDate dataNascimento, Endereco endereco, String instituicaoVinculada, List<Livro> livros) {
         super(nome, cpf, idade, dataNascimento, endereco);
         this.instituicaoVinculada = instituicaoVinculada;
         this.livros = livros;
@@ -61,6 +62,6 @@ public class Autor extends Pessoa implements Serializable {
         return "Autor{" +
                 "instituicaoVinculada='" + instituicaoVinculada + '\'' +
                 ", livros=" + livros +
-                '}';
+                "} " + super.toString();
     }
 }
