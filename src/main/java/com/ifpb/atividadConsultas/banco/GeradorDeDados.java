@@ -89,8 +89,8 @@ public class GeradorDeDados {
                 "IFPB",
                 null
         );
-        Autor paulo = new Autor(
-                "Paulo",
+        Autor jo = new Autor(
+                "Jô Soares",
                 "61458021",
                 37,
                 LocalDate.of(1982,11,21)
@@ -104,14 +104,14 @@ public class GeradorDeDados {
         Livro meu_banco_e_o_melhor = new Livro(
                 "Meu banco é o melhor",
                 "111111",
-                LocalDate.of(2019,03,25),
+                LocalDate.of(2018,03,25),
                 Collections.singletonList(diego)
         );
 
         Livro meu_ejb_e_o_melhor = new Livro(
                 "Meu EJB é o melhor",
                 "222222",
-                LocalDate.now(),
+                LocalDate.of(2019,04,17),
                 Collections.singletonList(diego)
         );
 
@@ -119,21 +119,21 @@ public class GeradorDeDados {
                 "Meu POO é o melhor",
                 "444444",
                 LocalDate.now(),
-                Collections.singletonList(paulo)
+                Collections.singletonList(jo)
         );
 
-        List<Livro> livros_de_paulo = new ArrayList<>();
+        List<Livro> livros_de_jo = new ArrayList<>();
         List<Livro> livros_de_diego = new ArrayList<>();
 
         livros_de_diego.add(meu_banco_e_o_melhor);
         livros_de_diego.add(meu_ejb_e_o_melhor);
-        livros_de_paulo.add(meu_poo_e_o_melhor);
+        livros_de_jo.add(meu_poo_e_o_melhor);
 
         diego.setLivros(livros_de_diego);
-        paulo.setLivros(livros_de_paulo);
+        jo.setLivros(livros_de_jo);
 
         autores.add(diego);
-        autores.add(paulo);
+        autores.add(jo);
 
         return autores;
     }
