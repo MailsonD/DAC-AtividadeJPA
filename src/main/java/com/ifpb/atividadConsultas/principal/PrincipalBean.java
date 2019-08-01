@@ -1,9 +1,7 @@
 package com.ifpb.atividadConsultas.principal;
 
 import com.ifpb.atividadConsultas.banco.GeradorDeDados;
-import com.ifpb.atividadConsultas.model.AlunoVO;
-import com.ifpb.atividadConsultas.model.Livro;
-import com.ifpb.atividadConsultas.model.Professor;
+import com.ifpb.atividadConsultas.model.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -12,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.time.LocalDate;
 
 @Singleton
@@ -24,16 +23,21 @@ public class PrincipalBean {
     @Inject
     private GeradorDeDados geradorDeDados;
 
+    private CriteriaBuilder cb;
+
     @PostConstruct
     private void init(){
         geradorDeDados.inserirDados(em);
-
+        cb = em.getCriteriaBuilder();
 //        questao_A_JPQL();
+//        questao_A_CRITERIA();
 //        questao_B_JPQL();
+//        questao_B_CRITERIA();
 //        questao_C_JPQL();
+        questao_C_CRITERIA();
 //        questao_D_JPQL();
 //        questao_E_JPQL();
-        questao_F_JPQL();
+//        questao_F_JPQL();
     }
 
     private void questao_A_JPQL(){
@@ -46,6 +50,29 @@ public class PrincipalBean {
         );
     }
 
+    private void questao_A_CRITERIA(){
+        CriteriaQuery<Livro> query = cb.createQuery(Livro.class);
+        Subquery<Autor> subquery = query.subquery(Autor.class);
+
+        Root<Livro> from = subquery.from(Livro.class);
+        Join<Livro, Autor> join = from.join("autores");
+
+        Predicate notEqual = cb.notEqual(
+                join.get("dataNascimento"), LocalDate.of(1982, 11, 21)
+        );
+
+        subquery.select(join).where(notEqual);
+
+        query.select(from)
+                .where(
+                        cb.exists(subquery)
+                );
+        em.createQuery(query)
+                .getResultList()
+                .forEach(System.out::println);
+
+    }
+
     private void questao_B_JPQL(){
         String jpql = "SELECT p FROM Professor p WHERE p.telefones IS NOT EMPTY AND p.endereco.rua = :rua";
         TypedQuery<Professor> query = em.createQuery(jpql, Professor.class);
@@ -53,6 +80,23 @@ public class PrincipalBean {
         query.getResultList().forEach(
                 System.out::println
         );
+    }
+
+    private void questao_B_CRITERIA(){
+        CriteriaQuery<Professor> query = cb.createQuery(Professor.class);
+        Root<Professor> from = query.from(Professor.class);
+        Join<Professor, Endereco> join = from.join("endereco");
+
+        Predicate notEmpty = cb.isNotEmpty(from.get("telefones"));
+
+        Predicate equal = cb.equal(join.get("rua"), "Que atividade facil");
+
+        query.select(from).where(cb.and(notEmpty,equal));
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(System.out::println);
+
     }
 
     private void questao_C_JPQL(){
@@ -65,6 +109,23 @@ public class PrincipalBean {
         );
     }
 
+    private void questao_C_CRITERIA(){
+        CriteriaQuery<AlunoVO> query = cb.createQuery(AlunoVO.class);
+        Root<Aluno> from = query.from(Aluno.class);
+
+        Predicate equal = cb.equal(from.get("turma"), "2019.1");
+
+        query.multiselect(
+                from.get("nome"),
+                from.get("cpf"),
+                from.get("idade")
+        ).where(equal);
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(System.out::println);
+    }
+
     private void questao_D_JPQL(){
         String jpql = "SELECT p FROM Professor p WHERE EXISTS (SELECT t FROM p.telefones t WHERE t.numero LIKE :telefone)";
         TypedQuery<Professor> query = em.createQuery(jpql, Professor.class);
@@ -72,6 +133,10 @@ public class PrincipalBean {
         query.getResultList().forEach(
                 System.out::println
         );
+    }
+
+    private void questao_D_CRITERIA(){
+
     }
 
     private void questao_E_JPQL(){
@@ -85,6 +150,10 @@ public class PrincipalBean {
         );
     }
 
+    private void questao_E_CRITERIA(){
+
+    }
+
     private void questao_F_JPQL(){
         String jpql = "SELECT DISTINCT l FROM Livro l, IN(l.autores) a WHERE a.nome LIKE :expressao";
         TypedQuery<Livro> query = em.createQuery(jpql, Livro.class);
@@ -92,6 +161,10 @@ public class PrincipalBean {
         query.getResultList().forEach(
                 System.out::println
         );
+    }
+
+    private void questao_F_CRITERIA(){
+
     }
 
 }
