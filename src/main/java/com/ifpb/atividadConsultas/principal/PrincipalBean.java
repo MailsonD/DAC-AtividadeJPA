@@ -34,10 +34,13 @@ public class PrincipalBean {
 //        questao_B_JPQL();
 //        questao_B_CRITERIA();
 //        questao_C_JPQL();
-        questao_C_CRITERIA();
+//        questao_C_CRITERIA();
 //        questao_D_JPQL();
+//        questao_D_CRITERIA();
 //        questao_E_JPQL();
+//        questao_E_CRITERIA();
 //        questao_F_JPQL();
+        questao_F_CRITERIA();
     }
 
     private void questao_A_JPQL(){
@@ -127,7 +130,7 @@ public class PrincipalBean {
     }
 
     private void questao_D_JPQL(){
-        String jpql = "SELECT p FROM Professor p WHERE EXISTS (SELECT t FROM p.telefones t WHERE t.numero LIKE :telefone)";
+        String jpql = "SELECT DISTINCT p FROM Professor p, IN(p.telefones) t WHERE t.numero LIKE :telefone";
         TypedQuery<Professor> query = em.createQuery(jpql, Professor.class);
         query.setParameter("telefone","%8");
         query.getResultList().forEach(
@@ -136,6 +139,19 @@ public class PrincipalBean {
     }
 
     private void questao_D_CRITERIA(){
+        CriteriaQuery<Professor> query = cb.createQuery(Professor.class);
+        Root<Professor> from = query.from(Professor.class);
+
+        Join<Professor, Telefone> join = from.join("telefones");
+
+        Predicate like = cb.like(join.get("numero"), "%8");
+
+        query.select(from).where(like).distinct(true);
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(System.out::println);
+
 
     }
 
@@ -151,7 +167,25 @@ public class PrincipalBean {
     }
 
     private void questao_E_CRITERIA(){
+        CriteriaQuery<Livro> query = cb.createQuery(Livro.class);
+        Root<Livro> from = query.from(Livro.class);
+        Join<Livro, Autor> join = from.join("autores");
+        Join<Autor, Endereco> join1 = join.join("endereco");
 
+        Predicate like = cb.like(join1.get("cidade"), "cajazeiras");
+
+        Predicate between = cb.between(from.get("lancamento"),
+                LocalDate.of(2019, 1, 1),
+                LocalDate.of(2019, 12, 12)
+        );
+
+        query.select(from).where(
+                cb.and(like,between)
+        );
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(System.out::println);
     }
 
     private void questao_F_JPQL(){
@@ -164,7 +198,18 @@ public class PrincipalBean {
     }
 
     private void questao_F_CRITERIA(){
+        CriteriaQuery<Livro> query = cb.createQuery(Livro.class);
+        Root<Livro> from = query.from(Livro.class);
 
+        Join<Livro, Autor> join = from.join("autores");
+
+        Predicate like = cb.like(join.get("nome"), "J%");
+
+        query.select(from).where(like);
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(System.out::println);
     }
 
 }
