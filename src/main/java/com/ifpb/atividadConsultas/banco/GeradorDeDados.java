@@ -18,7 +18,7 @@ public class GeradorDeDados {
 
         Area industria = new Area(233,"industria");
         Area tecnologia = new Area(246,"Tecnologia");
-        Area medicina = new Area(246,"Medicina");
+        Area medicina = new Area(249,"Medicina");
 
         List<Area> areas = new ArrayList<>();
         areas.add(industria);
@@ -62,24 +62,33 @@ public class GeradorDeDados {
         Publicacao maquinario = new Publicacao(
                 11,
                 "Máquinas pesadas",
+                Ednaldo,
+                Lucas,
                 Collections.singletonList(industria)
         );
 
         Publicacao novaTecnologia = new Publicacao(
                 22,
                 "Uma nova tecnologia",
+                Matheus,
+                Andre,
                 Collections.singletonList(tecnologia)
+
         );
 
         Publicacao curaFebre = new Publicacao(
-                11,
+                33,
                 "Nova cura para a febre",
+                Ednaldo,
+                Lucas,
                 Collections.singletonList(medicina)
         );
 
         Publicacao meuHelloWorld = new Publicacao(
-                11,
-                "Hello world em tudo quanto é linguagem",
+                44,
+                "Java: ensinando um Hello world",
+                Matheus,
+                Andre,
                 Collections.singletonList(tecnologia)
         );
 

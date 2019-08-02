@@ -32,6 +32,9 @@ public class Publicacao implements Serializable {
         this.areas = areas;
     }
 
+    public Publicacao() {
+    }
+
     public int getCodPublicacao() {
         return codPublicacao;
     }
