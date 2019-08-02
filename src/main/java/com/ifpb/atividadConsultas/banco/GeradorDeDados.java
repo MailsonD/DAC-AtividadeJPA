@@ -13,168 +13,107 @@ import java.util.List;
 @Stateless
 public class GeradorDeDados {
 
-    private final String turma1 = "2019.1";
-    private final String turma2 = "2019.2";
-    private final Endereco endereco1 =
-            new Endereco(
-            "Rua minha rua",
-            "Bairro do bagui",
-            "testerCity",
-            "50000");
-    private final Endereco endereco2 =
-            new Endereco(
-                    "Que atividade facil",
-                    "Bairro de dac",
-                    "cajazeiras",
-                    "50000");
 
-    public void inserirDados(EntityManager em){
-        for (Aluno aluno: gerarAlunos()){
-            em.persist(aluno);
-        }
-        for (Autor autor: gerarAutoresLivros()){
-            em.persist(autor);
-        }
-        for (Professor professor: gerarProfessores()){
-            em.persist(professor);
-        }
+    public void inserirDados(EntityManager em) {
 
-    }
+        Area industria = new Area(233,"industria");
+        Area tecnologia = new Area(246,"Tecnologia");
+        Area medicina = new Area(246,"Medicina");
 
+        List<Area> areas = new ArrayList<>();
+        areas.add(industria);
+        areas.add(tecnologia);
+        areas.add(medicina);
 
-    private List<Aluno> gerarAlunos(){
-        List<Aluno> alunos = new ArrayList<>();
-        alunos.add(
-                new Aluno(
-                        "Lucas","1233211565",19,
+        //===================================================
 
-                        LocalDate.of(2000,03,11),
-                        endereco1,
-                        "282828282",
-                        LocalDate.of(2018,05,16),
-                        turma1
-                        )
-        );
-        alunos.add(
-                new Aluno(
-                        "Jonas","1457311565",21,
-                        LocalDate.of(1998,05,18),
-                        endereco1,
-                        "272178282",
-                        LocalDate.of(2016,04,20),
-                        turma1
-                )
-        );
-        alunos.add(
-                new Aluno(
-                        "Marcos","7853211565",16,
-                        LocalDate.of(2003,07,05),
-                        endereco1,
-                        "282828282",
-                        LocalDate.of(2018,05,16),
-                        turma2
-                )
-        );
-        return alunos;
-    }
-
-    private List<Autor> gerarAutoresLivros(){
-        List<Autor> autores = new ArrayList<>();
-        Autor diego = new Autor(
-                "Diego",
-                "521264511",
-                37,
-                LocalDate.of(1984,07,26),
-                endereco2,
-                "IFPB",
+        Escritor Matheus = new Escritor(
+                "Matheus",
+                LocalDate.of(1989,6,3),
+                3,
                 null
         );
-        Autor jo = new Autor(
-                "Jô Soares",
-                "61458021",
-                37,
-                LocalDate.of(1982,11,21)
-                ,
-                endereco1,
-                "IFPB",
+
+        Escritor Ednaldo = new Escritor(
+                "Ednaldo",
+                LocalDate.of(1970,2,11),
+                1,
                 null
         );
 
 
-        Livro meu_banco_e_o_melhor = new Livro(
-                "Meu banco é o melhor",
-                "111111",
-                LocalDate.of(2018,03,25),
-                Collections.singletonList(diego)
-        );
-
-        Livro meu_ejb_e_o_melhor = new Livro(
-                "Meu EJB é o melhor",
-                "222222",
-                LocalDate.of(2019,04,17),
-                Collections.singletonList(diego)
-        );
-
-        Livro meu_poo_e_o_melhor = new Livro(
-                "Meu POO é o melhor",
-                "444444",
-                LocalDate.now(),
-                Collections.singletonList(jo)
-        );
-
-        List<Livro> livros_de_jo = new ArrayList<>();
-        List<Livro> livros_de_diego = new ArrayList<>();
-
-        livros_de_diego.add(meu_banco_e_o_melhor);
-        livros_de_diego.add(meu_ejb_e_o_melhor);
-        livros_de_jo.add(meu_poo_e_o_melhor);
-
-        diego.setLivros(livros_de_diego);
-        jo.setLivros(livros_de_jo);
-
-        autores.add(diego);
-        autores.add(jo);
-
-        return autores;
-    }
-
-    private List<Professor> gerarProfessores(){
-        List<Professor> professores = new ArrayList<>();
-
-        Telefone telefone1 = new Telefone("8980678",TelefoneType.COMERICAL);
-        Telefone telefone2 = new Telefone("9768589",TelefoneType.RESIDENCIAL);
-//        Telefone telefone3 = new Telefone("5634134",TelefoneType.COMERICAL);
-
-        List<Telefone> telefonesDeJob = new ArrayList<>();
-        telefonesDeJob.add(telefone1);
-        telefonesDeJob.add(telefone2);
-
-//        List<Telefone> telefonesDeAri = new ArrayList<>();
-//        telefonesDeAri.add(telefone3);
-
-        Professor job = new Professor(
-                "Ricardo Job",
-                "68423143",
-                45,
-                LocalDate.now(),
-                endereco2,
-                9000.0,
-                telefonesDeJob
-        );
-        Professor ari = new Professor(
-                "Aristofanio",
-                "656824114",
-                48,
-                LocalDate.now(),
-                endereco1,
-                8000.0,
+        Revisor Andre = new Revisor(
+                "André",
+                LocalDate.of(1950,8,25),
+                "Eu sou um revisor criterioso",
                 null
         );
 
-        professores.add(job);
-        professores.add(ari);
+        Revisor Lucas = new Revisor(
+                "Lucas",
+                LocalDate.of(1970,4,20),
+                "Eu sou um ótimo revisor",
+                null
+        );
 
-        return professores;
+
+        //===================================================
+
+        Publicacao maquinario = new Publicacao(
+                11,
+                "Máquinas pesadas",
+                Collections.singletonList(industria)
+        );
+
+        Publicacao novaTecnologia = new Publicacao(
+                22,
+                "Uma nova tecnologia",
+                Collections.singletonList(tecnologia)
+        );
+
+        Publicacao curaFebre = new Publicacao(
+                11,
+                "Nova cura para a febre",
+                Collections.singletonList(medicina)
+        );
+
+        Publicacao meuHelloWorld = new Publicacao(
+                11,
+                "Hello world em tudo quanto é linguagem",
+                Collections.singletonList(tecnologia)
+        );
+
+        List<Publicacao> de_Matheus_revisado_Andre = new ArrayList<>();
+        List<Publicacao> de_Ednaldo_revisado_Lucas = new ArrayList<>();
+
+        de_Matheus_revisado_Andre.add(novaTecnologia);
+        de_Matheus_revisado_Andre.add(meuHelloWorld);
+        de_Ednaldo_revisado_Lucas.add(curaFebre);
+        de_Ednaldo_revisado_Lucas.add(maquinario);
+
+        Matheus.setPublicacoes(de_Matheus_revisado_Andre);
+        Andre.setPublicacoes(de_Matheus_revisado_Andre);
+        Ednaldo.setPublicacoes(de_Ednaldo_revisado_Lucas);
+        Lucas.setPublicacoes(de_Ednaldo_revisado_Lucas);
+
+        //===================================================
+
+        List<Pessoa> pessoas = new ArrayList<>();
+        pessoas.add(Matheus);
+        pessoas.add(Andre);
+        pessoas.add(Ednaldo);
+        pessoas.add(Lucas);
+
+        //===================================================
+
+        for (Area a: areas) {
+            em.persist(a);
+        }
+
+        for (Pessoa p: pessoas) {
+            em.persist(p);
+        }
+
+
     }
-
 }

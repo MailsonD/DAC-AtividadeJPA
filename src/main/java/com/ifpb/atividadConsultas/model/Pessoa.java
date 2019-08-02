@@ -5,7 +5,6 @@ import com.ifpb.atividadConsultas.conversores.ConvertLocalDate;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -16,23 +15,15 @@ public class Pessoa implements Serializable {
     @GeneratedValue
     private int id;
     private String nome;
-    @Column(unique = true)
-    private String cpf;
-    private int idade;
     @Convert(converter = ConvertLocalDate.class)
     private LocalDate dataNascimento;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Endereco endereco;
 
-    public Pessoa() {
+    public Pessoa(String nome, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
     }
 
-    public Pessoa(String nome, String cpf, int idade, LocalDate dataNascimento, Endereco endereco) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.idade = idade;
-        this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
+    public Pessoa() {
     }
 
     public int getId() {
@@ -51,22 +42,6 @@ public class Pessoa implements Serializable {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
@@ -75,30 +50,19 @@ public class Pessoa implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Pessoa)) return false;
         Pessoa pessoa = (Pessoa) o;
         return getId() == pessoa.getId() &&
-                getIdade() == pessoa.getIdade() &&
                 Objects.equals(getNome(), pessoa.getNome()) &&
-                Objects.equals(getCpf(), pessoa.getCpf()) &&
-                Objects.equals(getDataNascimento(), pessoa.getDataNascimento()) &&
-                Objects.equals(getEndereco(), pessoa.getEndereco());
+                Objects.equals(getDataNascimento(), pessoa.getDataNascimento());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNome(), getCpf(), getIdade(), getDataNascimento(), getEndereco());
+        return Objects.hash(getId(), getNome(), getDataNascimento());
     }
 
     @Override
@@ -106,10 +70,7 @@ public class Pessoa implements Serializable {
         return "Pessoa{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", idade=" + idade +
                 ", dataNascimento=" + dataNascimento +
-                ", endereco=" + endereco +
                 '}';
     }
 }
