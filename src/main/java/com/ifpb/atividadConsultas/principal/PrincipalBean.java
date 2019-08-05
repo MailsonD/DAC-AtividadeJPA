@@ -28,14 +28,14 @@ public class PrincipalBean {
 
     @PostConstruct
     private void init(){
-        geradorDeDados.inserirDados(em);
+        geradorDeDados.inserirDados();
         cb = em.getCriteriaBuilder();
 //        questao_A_JPQL();
 //        questao_A_CRITERIA();
-//        questao_B_JPQL();
+        questao_B_JPQL();
 //        questao_B_CRITERIA();
 //        questao_C_JPQL();
-        questao_C_CRITERIA();
+//        questao_C_CRITERIA();
 //        questao_D_JPQL();
 //        questao_D_CRITERIA();
     }
@@ -54,24 +54,34 @@ public class PrincipalBean {
     }
 
     private void questao_B_JPQL() {
-        String jpql = "SELECT p.titulo, r.nome FROM Revisor r, IN(r.publicacoes) p, Area a " +
-                " WHERE a MEMBER OF p.areas AND a.nome LIKE :area";
+//        String jpql = "SELECT p.titulo, r.nome FROM Revisor r, IN(r.publicacoes) p, Area a " +
+//                " WHERE a MEMBER OF p.areas AND a.nome LIKE :area";
+        String jpql = "SELECT p.titulo, r.nome FROM Revisor r, IN(r.publicacoes) p, IN(p.areas) a " +
+                " WHERE a.nome LIKE :area";
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
         query.setParameter("area","industria");
         query.getResultList().forEach(a -> {
             System.out.println("Titulo: "+a[0]+" | Revisor: "+a[1]);
         });
-        System.out.println("Foi");
     }
 
     private void questao_B_CRITERIA() {
         CriteriaQuery<Object[]> query = cb.createQuery(Object[].class);
         Root<Revisor> fromRevisor = query.from(Revisor.class);
-        Root<Area> fromArea = query.from(Area.class);
-        Join<Object, Object> joinPub = fromRevisor.join("publicacoes");
-        Join<Object, Object> joinAreas = joinPub.join("areas");
+        Join<Revisor, Publicacao> joinPub = fromRevisor.join("publicacoes");
+        Join<Publicacao, Area> joinAreas = joinPub.join("areas");
 
-//        cb.isMember(,joinAreas);
+        Predicate like = cb.like(joinAreas.get("nome"), "industria");
+
+        query.multiselect(
+                fromRevisor.get("nome"),joinPub.get("titulo")
+        ).where(like);
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(a -> {
+                    System.out.println("Titulo: "+a[0]+" | Revisor: "+a[1]);
+                });
 
 
     }

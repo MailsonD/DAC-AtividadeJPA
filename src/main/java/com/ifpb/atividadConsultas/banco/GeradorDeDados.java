@@ -4,6 +4,7 @@ import com.ifpb.atividadConsultas.model.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
@@ -13,8 +14,10 @@ import java.util.List;
 @Stateless
 public class GeradorDeDados {
 
+    @PersistenceContext(unitName = "AtividadeConsultas")
+    private EntityManager em;
 
-    public void inserirDados(EntityManager em) {
+    public void inserirDados() {
 
         Area industria = new Area(233,"industria");
         Area tecnologia = new Area(246,"Tecnologia");
