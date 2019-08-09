@@ -30,6 +30,7 @@ public class PrincipalBean {
     private void init(){
         geradorDeDados.inserirDados();
         cb = em.getCriteriaBuilder();
+
 //        questao_A_JPQL();
         questao_A_CRITERIA();
 //        questao_B_JPQL();
@@ -42,21 +43,30 @@ public class PrincipalBean {
 
 
     private void questao_A_JPQL() {
-        String jpql = "SELECT p FROM Pessoa p WHERE     ";
+        String jpql = "SELECT p.titulo, e.nome, a.nome from Escritor e, IN(e.publicacoes) p, IN(p.areas) a WHERE e.id = :id";
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+        query.setParameter("id",3);
         query.getResultList().forEach(p -> {
-            System.out.println(p[0]);
-            System.out.println(p[1]);
-            System.out.println(p[2]);
-            System.out.println(p[3]);
+            System.out.println("Nome: "+p[1]+" | titulo: "+p[0]+" | area: "+p[2]);
         });
-
     }
 
 
     private void questao_A_CRITERIA() {
-        CriteriaQuery<Object> query = cb.createQuery();
+        CriteriaQuery<Object[]> query = cb.createQuery(Object[].class);
+        Root<Escritor> from = query.from(Escritor.class);
+        Join<Escritor, Publicacao> publicacoes = from.join("publicacoes");
+        Join<Publicacao, Area> areas = publicacoes.join("areas");
 
+        Predicate equal = cb.equal(from.get("id"), 3);
+        query.multiselect(from.get("nome"),publicacoes.get("titulo"),areas.get("nome"))
+                .where(equal);
+
+        em.createQuery(query)
+                .getResultList()
+                .forEach(p -> {
+                    System.out.println("Nome: "+p[0]+" | titulo: "+p[1]+" | area: "+p[2]);
+                });
     }
 
     private void questao_B_JPQL() {
