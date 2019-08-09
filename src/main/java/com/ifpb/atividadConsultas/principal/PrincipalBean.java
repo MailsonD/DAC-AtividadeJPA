@@ -31,8 +31,8 @@ public class PrincipalBean {
         geradorDeDados.inserirDados();
         cb = em.getCriteriaBuilder();
 //        questao_A_JPQL();
-//        questao_A_CRITERIA();
-        questao_B_JPQL();
+        questao_A_CRITERIA();
+//        questao_B_JPQL();
 //        questao_B_CRITERIA();
 //        questao_C_JPQL();
 //        questao_C_CRITERIA();
@@ -50,6 +50,12 @@ public class PrincipalBean {
             System.out.println(p[2]);
             System.out.println(p[3]);
         });
+
+    }
+
+
+    private void questao_A_CRITERIA() {
+        CriteriaQuery<Object> query = cb.createQuery();
 
     }
 
